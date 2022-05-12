@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>481</width>
+    <height>556</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>화면캡쳐_ver1.0.0</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="pushButton_capture">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>0</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>캡쳐영역</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_capture">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>0</y>
+      <width>116</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>캡쳐 영역에 번역</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_start">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>0</y>
+      <width>76</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>시작하기</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>461</width>
+      <height>471</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>클립보드 텍스트</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTextEdit" name="textEdit_clip"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>번역 텍스트</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTextEdit" name="textEdit_trans"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>481</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_option">
+    <property name="title">
+     <string>옵션</string>
+    </property>
+    <addaction name="actioTrans"/>
+   </widget>
+   <widget class="QMenu" name="menu_view">
+    <property name="title">
+     <string>보기</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_help">
+    <property name="title">
+     <string>도움말</string>
+    </property>
+    <addaction name="actionhelp"/>
+   </widget>
+   <widget class="QMenu" name="menu_start">
+    <property name="title">
+     <string>시작</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_file">
+    <property name="title">
+     <string>파일</string>
+    </property>
+    <addaction name="actionQuit"/>
+   </widget>
+   <addaction name="menu_file"/>
+   <addaction name="menu_start"/>
+   <addaction name="menu_option"/>
+   <addaction name="menu_view"/>
+   <addaction name="menu_help"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
+  <action name="actioTrans">
+   <property name="text">
+    <string>투명도설정</string>
+   </property>
+  </action>
+  <action name="actionhelp">
+   <property name="text">
+    <string>정보(Info)</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,4 @@
+# pyside6-uic.exe untitled.ui > main_ui.py
+pywin32
+keyboard
+mouse
