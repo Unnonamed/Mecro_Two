@@ -1,42 +1,18 @@
-# Mecro_First
+# Mecro_Two
 
-# pip list (정리해서 required.txt로)
-charset-normalizer 2.0.12
-idna               3.3
-numpy              1.22.3
-Pillow             9.1.0
-pip                22.0.4
-PySide6            6.2.4
-requests           2.27.1
-setuptools         60.10.0
-shiboken6          6.2.4
-torch              1.11.0
-torchaudio         0.11.0
-torchvision        0.12.0
-typing_extensions  4.1.1
-urllib3            1.26.9
-wheel              0.37.1
-opencv-contrib-python 
-
-# h3 pyqt 사용법 #
-##### 배포 pip freeze > requirements.txt
-##### 설치 pip install -r requirements.txt
-
-1. pyside6-designer 실행
-    - pyside6-designer.exe
-2. pyside6-designer로 만든 코드 컴파일
-    - pyside6-uic.exe untitled.ui > main_ui.py
-3. pyinstaller로 exe 파일로 컴파일 (-F : 한 파일로 만들기)
-    - pyinstaller -w ui_test.py  
-
-## 이슈사향
+## 이슈사항 (버그?)
 1. 디스플레이설정 : 텍스트, 앱 기타항목 크기 100%가 아닐 시 범위지정 안맞는 이슈
 
 
-## 요청사항
+## 작업사항
 # To Do
-    - none
-# Doing
-    - none
+    - cnocr 가져올 때 ',' -> 띄어쓰기로 변경
+    - cnocr 학습시키는 방법? 가능한 경우 한국어 학습시켜보기.
+    - 영어, 중국어 번역 (papago api, google api 사용할 듯?)
+    - ui 세부 기능 삽입 하기
+# Doing (git에 반영된 목록)
+    - pytourch 예제 작동확인 (pytourch_test.py)
+    - gitignore 에 data/ 추가
 # Done
-    - none
+    - QApplication 클립보드 복사 기능
+    - cnocr 사용해서 중국어, 영어 텍스트 번역텍스트에 작성

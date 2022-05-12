@@ -1,4 +1,3 @@
-from torch import q_scale
 import option_trans_form as dialog
 from PySide6.QtWidgets import QFileDialog
 from PySide6.QtGui import QCloseEvent
@@ -9,9 +8,9 @@ class Option_trans_dialog(QDialog):
         super().__init__(parent)
         self.dialog = dialog.Ui_dialog()
         self.main = parent
+        
         #객체에 옵션을 가져오는 함수
         self.dialog.setupUi(self)
-        
         
         self.dialog_slider = self.dialog.horizontalSlider
         self.dialog_text = self.dialog.label

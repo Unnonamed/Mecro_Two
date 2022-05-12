@@ -113,7 +113,6 @@ class captureWindow(QWidget):
 
         self.setWindowTitle(" ")
         #self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint) # 항상 위로 올라옴 | 상단 타이틀 부분 가리기 
-        #self.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.setWindowOpacity(self.main.transval * 0.1) #투명도
         self.setAutoFillBackground(True)
         
