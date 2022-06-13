@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-# not used
+# ======= not used
 import time
 from threading import Thread, Event
 
