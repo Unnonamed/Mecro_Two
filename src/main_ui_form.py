@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'untitled.ui'
+## Form generated from reading UI file 'main.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.2.4
 ##
@@ -16,15 +16,17 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QLabel, QMainWindow,
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QGridLayout,
+    QGroupBox, QHBoxLayout, QLabel, QMainWindow,
     QMenu, QMenuBar, QPushButton, QSizePolicy,
-    QStatusBar, QTextEdit, QVBoxLayout, QWidget)
+    QSpacerItem, QStatusBar, QTextEdit, QVBoxLayout,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(481, 556)
+        MainWindow.resize(597, 628)
         self.actionQuit = QAction(MainWindow)
         self.actionQuit.setObjectName(u"actionQuit")
         self.actioTrans = QAction(MainWindow)
@@ -33,45 +35,100 @@ class Ui_MainWindow(object):
         self.actionhelp.setObjectName(u"actionhelp")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.pushButton_capture = QPushButton(self.centralwidget)
-        self.pushButton_capture.setObjectName(u"pushButton_capture")
-        self.pushButton_capture.setGeometry(QRect(380, 0, 91, 31))
-        self.checkBox_capture = QCheckBox(self.centralwidget)
-        self.checkBox_capture.setObjectName(u"checkBox_capture")
-        self.checkBox_capture.setGeometry(QRect(260, 0, 116, 31))
-        self.checkBox_start = QCheckBox(self.centralwidget)
+        self.gridLayout_6 = QGridLayout(self.centralwidget)
+        self.gridLayout_6.setObjectName(u"gridLayout_6")
+        self.groupBox = QGroupBox(self.centralwidget)
+        self.groupBox.setObjectName(u"groupBox")
+        self.gridLayout_8 = QGridLayout(self.groupBox)
+        self.gridLayout_8.setObjectName(u"gridLayout_8")
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout.addItem(self.horizontalSpacer)
+
+        self.checkBox_start = QCheckBox(self.groupBox)
         self.checkBox_start.setObjectName(u"checkBox_start")
-        self.checkBox_start.setGeometry(QRect(180, 0, 76, 31))
-        self.layoutWidget = QWidget(self.centralwidget)
-        self.layoutWidget.setObjectName(u"layoutWidget")
-        self.layoutWidget.setGeometry(QRect(10, 40, 461, 471))
-        self.verticalLayout = QVBoxLayout(self.layoutWidget)
+
+        self.horizontalLayout.addWidget(self.checkBox_start)
+
+        self.pushButton_capture = QPushButton(self.groupBox)
+        self.pushButton_capture.setObjectName(u"pushButton_capture")
+
+        self.horizontalLayout.addWidget(self.pushButton_capture)
+
+
+        self.gridLayout_8.addLayout(self.horizontalLayout, 0, 0, 1, 1)
+
+        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout.setSpacing(2)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.label = QLabel(self.layoutWidget)
+        self.label = QLabel(self.groupBox)
         self.label.setObjectName(u"label")
+        self.label.setMaximumSize(QSize(435, 16))
 
-        self.verticalLayout.addWidget(self.label)
+        self.verticalLayout.addWidget(self.label, 0, Qt.AlignLeft|Qt.AlignTop)
 
-        self.textEdit_clip = QTextEdit(self.layoutWidget)
+        self.textEdit_clip = QTextEdit(self.groupBox)
         self.textEdit_clip.setObjectName(u"textEdit_clip")
+        self.textEdit_clip.setMinimumSize(QSize(0, 71))
+        self.textEdit_clip.setMaximumSize(QSize(16777215, 71))
 
-        self.verticalLayout.addWidget(self.textEdit_clip)
+        self.verticalLayout.addWidget(self.textEdit_clip, 0, Qt.AlignTop)
 
-        self.label_2 = QLabel(self.layoutWidget)
+        self.label_2 = QLabel(self.groupBox)
         self.label_2.setObjectName(u"label_2")
+        self.label_2.setMaximumSize(QSize(435, 16))
 
-        self.verticalLayout.addWidget(self.label_2)
+        self.verticalLayout.addWidget(self.label_2, 0, Qt.AlignLeft|Qt.AlignTop)
 
-        self.textEdit_trans = QTextEdit(self.layoutWidget)
+        self.textEdit_trans = QTextEdit(self.groupBox)
         self.textEdit_trans.setObjectName(u"textEdit_trans")
+        self.textEdit_trans.setMaximumSize(QSize(16777215, 71))
 
-        self.verticalLayout.addWidget(self.textEdit_trans)
+        self.verticalLayout.addWidget(self.textEdit_trans, 0, Qt.AlignTop)
+
+
+        self.gridLayout_8.addLayout(self.verticalLayout, 1, 0, 1, 1)
+
+        self.gridLayout = QGridLayout()
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.textEdit_google = QTextEdit(self.groupBox)
+        self.textEdit_google.setObjectName(u"textEdit_google")
+
+        self.gridLayout.addWidget(self.textEdit_google, 1, 0, 1, 1)
+
+        self.textEdit_papago = QTextEdit(self.groupBox)
+        self.textEdit_papago.setObjectName(u"textEdit_papago")
+
+        self.gridLayout.addWidget(self.textEdit_papago, 1, 1, 1, 1)
+
+        self.comboBox_google = QComboBox(self.groupBox)
+        self.comboBox_google.addItem("")
+        self.comboBox_google.addItem("")
+        self.comboBox_google.addItem("")
+        self.comboBox_google.setObjectName(u"comboBox_google")
+
+        self.gridLayout.addWidget(self.comboBox_google, 0, 0, 1, 1)
+
+        self.comboBox_papago = QComboBox(self.groupBox)
+        self.comboBox_papago.addItem("")
+        self.comboBox_papago.addItem("")
+        self.comboBox_papago.addItem("")
+        self.comboBox_papago.setObjectName(u"comboBox_papago")
+
+        self.gridLayout.addWidget(self.comboBox_papago, 0, 1, 1, 1)
+
+
+        self.gridLayout_8.addLayout(self.gridLayout, 2, 0, 1, 1)
+
+
+        self.gridLayout_6.addWidget(self.groupBox, 0, 0, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 481, 22))
+        self.menubar.setGeometry(QRect(0, 0, 597, 22))
         self.menu_option = QMenu(self.menubar)
         self.menu_option.setObjectName(u"menu_option")
         self.menu_view = QMenu(self.menubar)
@@ -106,11 +163,19 @@ class Ui_MainWindow(object):
         self.actionQuit.setText(QCoreApplication.translate("MainWindow", u"Quit", None))
         self.actioTrans.setText(QCoreApplication.translate("MainWindow", u"\ud22c\uba85\ub3c4\uc124\uc815", None))
         self.actionhelp.setText(QCoreApplication.translate("MainWindow", u"\uc815\ubcf4(Info)", None))
-        self.pushButton_capture.setText(QCoreApplication.translate("MainWindow", u"\ucea1\uccd0\uc601\uc5ed", None))
-        self.checkBox_capture.setText(QCoreApplication.translate("MainWindow", u"\ucea1\uccd0 \uc601\uc5ed\uc5d0 \ubc88\uc5ed", None))
+        self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
         self.checkBox_start.setText(QCoreApplication.translate("MainWindow", u"\uc2dc\uc791\ud558\uae30", None))
+        self.pushButton_capture.setText(QCoreApplication.translate("MainWindow", u"\ucea1\uccd0\uc601\uc5ed", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"\ud074\ub9bd\ubcf4\ub4dc \ud14d\uc2a4\ud2b8", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"\ubc88\uc5ed \ud14d\uc2a4\ud2b8", None))
+        self.comboBox_google.setItemText(0, QCoreApplication.translate("MainWindow", u"\uad6c\uae00 - \ud55c\uad6d\uc5b4", None))
+        self.comboBox_google.setItemText(1, QCoreApplication.translate("MainWindow", u"\uad6c\uae00 - \uc601\uc5b4", None))
+        self.comboBox_google.setItemText(2, QCoreApplication.translate("MainWindow", u"\uad6c\uae00 - \uc77c\uc5b4", None))
+
+        self.comboBox_papago.setItemText(0, QCoreApplication.translate("MainWindow", u"\ud30c\ud30c\uace0 - \ud55c\uad6d\uc5b4", None))
+        self.comboBox_papago.setItemText(1, QCoreApplication.translate("MainWindow", u"\ud30c\ud30c\uace0 - \uc77c\uc5b4", None))
+        self.comboBox_papago.setItemText(2, QCoreApplication.translate("MainWindow", u"\ud30c\ud30c\uace0 - \uc601\uc5b4", None))
+
         self.menu_option.setTitle(QCoreApplication.translate("MainWindow", u"\uc635\uc158", None))
         self.menu_view.setTitle(QCoreApplication.translate("MainWindow", u"\ubcf4\uae30", None))
         self.menu_help.setTitle(QCoreApplication.translate("MainWindow", u"\ub3c4\uc6c0\ub9d0", None))

@@ -14,6 +14,9 @@ from PySide6.QtWidgets import * #(QApplication, QMainWindow,QLabel, QWidget, QMe
 from option_trans import Option_trans_dialog
 from cnocr_src.ocr import * 
 
+from selenium import webdriver
+import chromedriver_autoinstaller
+
 #visual code 에서 한글 깨질 때
 #sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
 #sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
