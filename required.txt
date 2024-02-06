@@ -1,1 +1,2 @@
-- Not yet make
+pyside6
+cnocr

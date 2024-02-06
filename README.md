@@ -1,12 +1,14 @@
 # Mecro_Two
 - 화면 캡쳐 후 번역용 프로그램
-
+- Python3.10+
 ## 이슈사항 (버그?)
 ```
 1. 디스플레이설정 : 텍스트, 앱 기타항목 크기 100%가 아닐 시 범위지정 안맞는 이슈
+2. ChromeDrive : 여러개 설치 시 맛탱이 감
+3. UI 개이상함
 ```
-
 ## 작업사항
+
 > #### To Do
     - cnocr 가져올 때 ',' -> 띄어쓰기로 변경
     - cnocr 학습시키는 방법? 가능한 경우 한국어 학습시켜보기.
@@ -18,3 +20,7 @@
 > #### Done
     - QApplication 클립보드 복사 기능
     - cnocr 사용해서 중국어, 영어 텍스트 번역텍스트에 작성
+
+
+# Authors
+- [yeongbin-jo](https://github.com/yeongbin-jo/python-chromedriver-autoinstaller)

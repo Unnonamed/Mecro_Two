@@ -15,8 +15,13 @@ from option_trans import Option_trans_dialog
 from cnocr_src.ocr import * 
 
 from selenium import webdriver
-import chromedriver_autoinstaller
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
 
+from utils import *
+import re
+import os
+import time
 #visual code 에서 한글 깨질 때
 #sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
 #sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
@@ -27,8 +32,64 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.w = None # No external window yet
         
-        # option 기본 세팅
-        self.transval = 1
+        self.driver = None
+        self.driver1 = None
+        self.driver_run = False
+        
+        chrome_options = webdriver.ChromeOptions()
+        # chrome_options.add_argument("--headless") #창 안띄우기
+        # chrome_options.add_argument("--no-sandbox") #root 권한으로 실행
+        # chrome_options.add_argument("--disable-dev-shm-usage") #디스크 메모리 사용안함
+        
+        self.textEdit_clip.setText("클립보드창")
+        self.textEdit_trans.setText("번역창")
+
+
+        
+        try:
+            s = os.walk('./') #현재 디렉토리
+            for path, dir, files in s:
+                for filename in files:
+                    # print(filename)
+                    ext = os.path.splitext(filename)[-1]
+                    if ext == '.exe':
+                        print("%s/%s" % (path, filename))
+                        file_path = f"{path}/{filename}" #파일 경로
+                        self.driver = webdriver.Chrome(service = Service(file_path), options=chrome_options)
+                        self.driver1 = webdriver.Chrome(service = Service(file_path), options=chrome_options)
+                        # time 업데이트 기능 - 메인 ui 타이머       
+                        self.chromeDriver_init()
+                        self.driver_run = True
+                        break
+                
+            if(self.driver_run == False) :
+                print("ChromeDriver not found")
+                raise AttributeError("ChromeDriver not found")
+
+                    
+        except AttributeError as e:
+            print('Install ChromeDriver : ,', e)
+            
+            insatll_Box = QMessageBox()
+            insatll_Box.setWindowTitle("Warning")
+            insatll_Box.setText("드라이버 설치할꺼임")
+            insatll_Box.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+            insatll_Box = insatll_Box.exec()
+            
+            if insatll_Box == QMessageBox.Ok:
+                get_chrome_version()
+                download_chromedriver()
+                
+                Util.showBox("Success", "Install ChromeDriver")
+                osRest()
+
+            else:
+                Util.showBox("Warning", "일부기능_마비")
+                pass
+            
+            
+            
+        self.transval = 1 # 투명도 값
         
         # menuTooltip Function
         # 파일 > 종료버튼
@@ -52,10 +113,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
         #setTitle Function
         self.textEdit_clip.textChanged.connect(self.textChanged_handler)
-
+        self.comboBox_papago.currentIndexChanged.connect(self.get_papago_language)
+        self.comboBox_google.currentIndexChanged.connect(self.get_google_language)
+        
         # time 업데이트 기능 - 메인 ui 타이머       
         timerVar = QTimer(self)
-        executor = mp.ThreadPoolExecutor(max_workers=1)
+        executor = mp.ThreadPoolExecutor(max_workers=4)
         executor.submit(self.timeUpdate_handler(timerVar))
         timerVar.start()
         
@@ -76,19 +139,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if not text:
             return
 
-        self.textEdit_clip.setText(text)   
+        self.textEdit_clip.setText(text)  
+
         
     @Slot()
     def textChanged_handler(self) -> None:
         text = self.textEdit_clip.toPlainText()
         conv_text = text
         self.textEdit_trans.setText(conv_text)
+
+
     
     @Slot()
     def timeUpdate_handler(self, timerVar:QTimer) -> None:
         #Qtimer
-        timerVar.setInterval(1000)
+        timerVar.setInterval(3000)
         timerVar.timeout.connect(self.timeUpdate)
+        timerVar.timeout.connect(self.chromeDriver_walker)
     
     def timeUpdate(self) -> None:
         now = datetime.datetime.now()
@@ -104,8 +171,95 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def captureWindow_handler(self):
         self.w = captureWindow(self)
         self.w.show()
+    
+    def chromeDriver_init(self) -> None:
+        if self.driver != None:
+            self.driver.get("https://papago.naver.com/")
+            self.driver.implicitly_wait(10) #10초 대기
+            self.driver.maximize_window() #전체화면
+            self.driver.implicitly_wait(10) #10초 대기
+            self.driver.set_window_size(1920, 1080) #화면 크기
+            self.driver.implicitly_wait(10) #10초 대기
+                  
+        if self.driver1 != None:  
+            self.driver1.get("https://translate.google.com/")
+            self.driver1.implicitly_wait(10) #10초 대기
+            self.driver1.maximize_window() #전체화면
+            self.driver1.implicitly_wait(10) #10초 대기
+            self.driver1.set_window_size(1920, 1080) #화면 크기
+            self.driver1.implicitly_wait(10) #10초 대기
+            
+    def chromeDriver_walker(self) -> None:
+        text = self.textEdit_trans.toPlainText()
+        if self.driver != None:            
+            data = self.get_papago_trans(text)
+            self.textEdit_papago.setText(data)
         
-     
+        if self.driver1 != None:
+            result = self.get_google_trans(text)
+            self.textEdit_google.setText(result)
+    
+    def get_papago_language(self):
+        set_language = self.comboBox_papago.currentText()
+
+        self.driver.find_element(by=By.ID, value='ddTargetLanguageButton').click()
+        # if (set_language == '파파고 - 한국어'):
+        #     self.driver.find_element(by=By.XPATH, value='/html/body/div/div/div[1]/section/div/div[1]/div[1]/div/div[2]/div[2]/div/div[2]/ul/li[1]/a').click()
+        # elif (set_language == '파파고 - 영어'):
+        #     self.driver.find_element(by=By.XPATH, value='/html/body/div/div/div[1]/section/div/div[1]/div[1]/div/div[2]/div[2]/div/div[2]/ul/li[2]/a').click()
+        # elif (set_language == '파파고 - 일어'):
+        #     self.driver.find_element(by=By.XPATH, value='/html/body/div/div/div[1]/section/div/div[1]/div[1]/div/div[2]/div[2]/div/div[2]/ul/li[3]/a').click()
+
+    def get_papago_trans(self, text):
+        try:
+            self.driver.find_element(by=By.ID, value='txtSource').clear() # 초기화
+            # self.driver.find_element_by_id("txtSource").send_keys(text)
+            self.driver.find_element(by=By.ID, value='txtSource').send_keys(text) # 번역할 내용 입력
+
+            # data = self.driver.find_element_by_xpath('//*[@id="txtTarget"]/span').text
+            data = self.driver.find_element(by=By.XPATH, value='//*[@id="txtTarget"]/span').text # 번역된 내용 가져오기
+            # self.driver.find_element_by_xpath('//*[@id="txtSource"]').click()
+            self.driver.find_element(by=By.XPATH, value='//*[@id="txtSource"]').click() # 번역하기 버튼 클릭
+            # self.driver.find_element_by_id("txtSource").clear()
+            self.driver.find_element(by=By.ID, value='txtSource').clear() # 초기화
+
+            if data:
+                return data
+            else:
+                return ''
+        except:
+            self.driver.quit()
+            self.driver = None
+
+    def get_google_language(self):
+        set_language = self.comboBox_google.currentText()
+        
+        if(set_language == '구글 - 한국어'):
+            self.driver1.find_element(by=By.XPATH, value='//*[@id="i11"]/span[3]').click()
+        elif(set_language == '구글 - 영어'):
+            self.driver1.find_element(by=By.XPATH, value='//*[@id="i12"]/span[3]').click()       
+        elif(set_language == '구글 - 일어'):
+            self.driver1.find_element(by=By.XPATH, value='//*[@id="i13"]/span[3]').click()
+
+        
+    def get_google_trans(self, text):
+        try:
+            self.driver1.find_element(by=By.CSS_SELECTOR, value='textarea').clear() # 초기화
+            self.driver1.find_element(by=By.CSS_SELECTOR, value='textarea').send_keys(text) # 번역할 내용 입력
+
+            result = self.driver1.find_element(by=By.XPATH, value='//*[@id="yDmH0d"]/c-wiz/div/div[2]/c-wiz/div[2]/c-wiz/div[1]/div[2]/div[3]/c-wiz[2]/div/div[8]/div/div[1]/span[1]/span/span').text # 번역된 내용 가져오기
+            self.driver1.find_element(by=By.CSS_SELECTOR, value='textarea').clear() # 초기화
+            
+            if result:
+                return result
+            else:
+                return ''
+        except Exception as e:
+            print('err, ', e)
+            self.driver1.quit()
+            self.driver1 = None
+
+        
 class captureWindow(QWidget):
     #def __init__(self, *args, obj=None, **kwargs):
     def __init__(self, parent) -> None:
@@ -211,7 +365,7 @@ class captureWindow(QWidget):
             if not self._screen:
                 return
             
-            print(self._screen)
+            #print(self._screen)
             #self.update_screenshot_label()
             
             #텍스트 앱 기타항목 크기 100% 125% 다르면 범위 깨짐
@@ -227,17 +381,17 @@ class captureWindow(QWidget):
 
         
 class Util:
-
-    def clickBtn():
-        print("gl")
+    def showBox(Title = "Title", send = "Message"):
         box = QMessageBox()
-        box.setWindowTitle("title")
-        box.setText("message")
+        box.setWindowTitle("Title")
+        box.setWindowFlag(Qt.FramelessWindowHint)
+        box.setText(send)
         box.exec()
-        
-    def printCV2():
-        print(cv2.__version__)
 
+        
+
+def osRest():
+    os.execl(sys.executable, sys.executable, *sys.argv)
 
 def main():
     app = QApplication(sys.argv)
